@@ -45,9 +45,40 @@ def get_scale(roots, steps):
 				if num < 0:
 					break
 				string.insert(0, num)
+	
+	return scale
 
+def print_scale(scale):
+	"""
+	Prints a representation of the neck of the guitar for this specific scale
+	"""
+	
 	for i in scale:
 		print i
+
+def change_key(song, scale):
+	"""
+	This takes an input sequence of notes(guitar tablature) and changes it to a different key
+	
+	The simplest algorithm I will implement for composing music.
+	Finds each note in the sequence and changes it to the closest note in the scale
+	This keeps the melody very similar, but changes what key it is in.
+	The melody may not be exactly the same because notes relative to each other will
+	not always be preserved the same way. 
+	"""
+
+	string = 0
+	previous_note = ''
+	for note in song:
+		if string > 6:
+			string = 0
+		if note == '\n':
+			string++
+
+		#This might be a retarded idea. Check to see if note is numeric	
+		if note in range(0, 0, 9):
+			previous_note = note
+			continue
 
 input = sys.stdin
 
