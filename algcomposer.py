@@ -1,4 +1,5 @@
 import sys
+import random
 
 """
 Takes a text guitar tab input, and changes the music to a different key with a different melody.
@@ -56,7 +57,7 @@ def print_scale(scale):
 	for i in scale:
 		print i
 
-def change_key(note, scale, string):
+def change_key(note, scale, string, accidental=-1):
 	"""
 	This takes an input sequence of notes(guitar tablature) and changes it to a different key
 	
@@ -67,15 +68,25 @@ def change_key(note, scale, string):
 	not always be preserved the same way. 
 	"""
 
+	random_offset = 0
 	min = 24
 	min_fret = 24
 	for fret in scale[string]:
 		if abs(fret - note) < min:
 			min = abs(fret - note) 
 			min_fret = fret
-	return min_fret
+	if accidental > 0:
+		rand_num = random.randrange(0, accidental, 1)
+		if rand_num == 1:
+			rand_num = random.randrange(0,1,1)
+			if rand_num == 1:
+				random_offset = 1
+			else:
+				random_offset = -1
 
-def go_through_file(song, scale, method):
+	return min_fret + random_offset
+
+def go_through_file(song, scale, method, accidental=-1):
 	"""
 	Goes through the input file(a song represented as guitar tablature) and performs the desired operation
 
@@ -83,6 +94,13 @@ def go_through_file(song, scale, method):
 	song - the file to be parsed
 	scale - the scale being used
 	method - What the user wants to do with this song
+	accidental - The amount of randomness the user wishes to add(explained below)
+
+	If the user wants to add an element of randomness, he or she may choose to include the last argument.
+	This will give a 1/accidental chance of a randomly placed accidental note being returned.
+
+	Methods so far: 'ck' = changes what key the song is in
+	
 	"""
 
 	modified_song = ""
@@ -99,7 +117,7 @@ def go_through_file(song, scale, method):
 				note = int(note)
 				previous_note = '-'
 				if method == 'ck':
-					str_to_add = str(change_key(note, scale, string))
+					str_to_add = str(change_key(note, scale, string, accidental))
 					if len(str_to_add)>1:
 						print 'testing ' + modified_song
 						modified_song += str_to_add
@@ -113,7 +131,7 @@ def go_through_file(song, scale, method):
 				note = int(previous_note)
 				previous_note = '-'
 				if method == 'ck':
-					modified_song += str(change_key(note, scale, string)) + '-'
+					modified_song += str(change_key(note, scale, string, accidental)) + '-'
 			else:
 				if note != '\n':
 					modified_song += '-'
@@ -124,12 +142,11 @@ def go_through_file(song, scale, method):
 	
 	if previous_note.isdigit():
 		if method == 'ck':
-			modified_song += str(change_key(int(previous_note), scale, string))
+			modified_song += str(change_key(int(previous_note), scale, string, accidental))
 
 	return modified_song
 
-input = sys.stdin
+input = sys.stdin.read()
 
-print '6'.isdigit()
-print int('6' + '5') + 6
-print go_through_file("--5--6--7--20\n1-5-3-3-5-6-7", get_scale([5,0,7,2,9,5],[2,2,1,2,2,2,1]), 'ck')
+output = go_through_file(input, get_scale([0,7,2,9,5,0],[2,2,1,2,2,2,1]), 'ck', 5)
+print output
