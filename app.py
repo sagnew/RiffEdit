@@ -13,11 +13,22 @@ def main_page():
 
 @app.route('/submit', methods=['POST'])
 def perform_script():
+	option = request.form["options"]
 	root = request.form["root"]
 	scale = request.form["scale"]
 	song = request.form["guitar_tab"]
-	#return redirect('/success', 301)
-	return root + " " + scale + " " + song + " "
+	jumps = [2,2,1,2,2,2,1] #just in case I messed up
+	if scale == "major":
+		jumps = [2,2,1,2,2,2,1]
+	elif scale == "minor":
+		jumps = [2,1,2,2,1,2,2]
+
+	if option == 'ck':
+		output = go_through_file(song, get_scale([0,7,2,9,5,0],jumps), option)
+	if option == 'ckr':
+		output = go_through_file(song, get_scale([0,7,2,9,5,0],jumps), 'ck', 5)
+	
+	return output 
 
 @app.route('/success')
 def sucess_page():
