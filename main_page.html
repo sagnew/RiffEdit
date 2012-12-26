@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+         <meta charset="utf-8">
+         <title>Algcomposer!</title>
+         <link rel="stylesheet" href="http://flip.hr/css/bootstrap.min.css">
+		 <link rel="stylesheet" href="stylesheet.css">
+ </head>
+ <body>
+         
+ <div class="container">
+         
+         <div class="hero-unit">
+         <h1>Algcomposer - Riff Editor!</h1>
+         <p>Select which method you wish to use.</p>
+		 <p><a class="btn btn-primary btn-large" align="middle">Super important &raquo;</a></p>
+         </div><!-- .hero-unit -->
+        
+ <div class="row">
+   
+         <div class="span6">
+			<h2>Input</h2>
+         	<textarea name="guitar_tab" id="guitar_tab" class="span6" rows="25"
+			onfocus="if (this.value==this.defaultValue) this.value = ''"
+			onblur="if (this.value=='') this.value = this.defaultValue">Enter text-based guitar tablature.</textarea>
+         	<a class="btn" href="#">Execute operation! &raquo;</a>
+         </div>
+   
+         <div class="span6">
+		<h2>Output</h2>
+		<textarea name="output_box" id="output_box" class="span6" rows="25" 
+			onfocus="if (this.value==this.defaultValue) this.value = ''"
+			onblur="if (this.value=='') this.value = this.defaultValue">View output here</textarea>
+		</div>
+
+ </div><!-- .row -->
+ </div><!-- .container -->
+     
+ </body>
+</html>

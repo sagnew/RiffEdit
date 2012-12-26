@@ -75,6 +75,7 @@ def change_key(note, scale, string, accidental=-1):
 		if abs(fret - note) < min:
 			min = abs(fret - note) 
 			min_fret = fret
+
 	if accidental > 0:
 		rand_num = random.randrange(0, accidental, 1)
 		if rand_num == 1:
@@ -107,10 +108,9 @@ def go_through_file(song, scale, method, accidental=-1):
 	string = 0
 	previous_note = '-'
 	for note in song:
-		print note
 		if string > 6:
 			string = 0
-		
+
 		if note.isdigit():
 			if previous_note.isdigit():
 				note = previous_note + note
@@ -119,22 +119,21 @@ def go_through_file(song, scale, method, accidental=-1):
 				if method == 'ck':
 					str_to_add = str(change_key(note, scale, string, accidental))
 					if len(str_to_add)>1:
-						print 'testing ' + modified_song
 						modified_song += str_to_add
-						print 'testing ' + modified_song
 					else:
 						modified_song += str_to_add + '-'
 			else:
 				previous_note = note
 		else:
 			if previous_note.isdigit():
+				non_note_char = note
 				note = int(previous_note)
 				previous_note = '-'
 				if method == 'ck':
-					modified_song += str(change_key(note, scale, string, accidental)) + '-'
+					modified_song += str(change_key(note, scale, string, accidental)) + non_note_char
 			else:
 				if note != '\n':
-					modified_song += '-'
+					modified_song += note
 		if note == '\n':
 			previous_note = '-'
 			modified_song += '\n'
@@ -148,5 +147,5 @@ def go_through_file(song, scale, method, accidental=-1):
 
 input = sys.stdin.read()
 
-output = go_through_file(input, get_scale([0,7,2,9,5,0],[2,2,1,2,2,2,1]), 'ck', 5)
+output = go_through_file(input, get_scale([0,7,2,9,5,0],[2,2,1,2,2,2,1]), 'ck', 3)
 print output
