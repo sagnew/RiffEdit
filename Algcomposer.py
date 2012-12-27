@@ -105,11 +105,11 @@ def go_through_file(song, scale, method, accidental=-1):
 	"""
 
 	modified_song = ""
-	string = 0
+	string = 6
 	previous_note = '-'
 	for note in song:
-		if string > 6:
-			string = 0
+		if string < 0:
+			string = 6
 
 		if note.isdigit():
 			if previous_note.isdigit():
@@ -137,15 +137,10 @@ def go_through_file(song, scale, method, accidental=-1):
 		if note == '\n':
 			previous_note = '-'
 			modified_song += '\n'
-			string += 1
+			string -= 1
 	
 	if previous_note.isdigit():
 		if method == 'ck':
 			modified_song += str(change_key(int(previous_note), scale, string, accidental))
 
 	return modified_song
-
-input = sys.stdin.read()
-
-output = go_through_file(input, get_scale([0,7,2,9,5,0],[2,2,1,2,2,2,1]), 'ck', 3)
-print output

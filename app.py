@@ -2,8 +2,12 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect
+from flask.ext.wtf import Form, TextAreaField
 from Algcomposer import *
 import os
+
+class OutputForm(Form):
+	output = TextAreaField('This is output')
 
 app = Flask(__name__)
 
@@ -11,8 +15,9 @@ app = Flask(__name__)
 def main_page():
 	return render_template('main_page.html')
 
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=['POST', 'GET'])
 def perform_script():
+	output = ""
 	option = request.form["options"]
 	root = request.form["root"]
 	scale = request.form["scale"]
@@ -27,8 +32,26 @@ def perform_script():
 		output = go_through_file(song, get_scale([0,7,2,9,5,0],jumps), option)
 	if option == 'ckr':
 		output = go_through_file(song, get_scale([0,7,2,9,5,0],jumps), 'ck', 5)
-	
-	return output 
+
+	with open("templates/main_page.html") as main_page:
+
+		#Setting up variables for replacing
+		scale_text = "<option value=" + '"' + scale + '"'
+		root_text = "<option value=" + '"' + root + '"'
+		method_text = "<option value=" + '"' + option + '"'
+		input_text = "Enter text-based guitar tablature."
+		
+		#replace form elements in the original html file to preserve input
+		replacement = main_page.read().replace("View output here", output)
+		replacement = replacement.replace(input_text, song)
+		replacement = replacement.replace(scale_text, scale_text + "selected")
+		replacement = replacement.replace(root_text, root_text + "selected")
+		replacement = replacement.replace(method_text, method_text + "selected")
+		with open("templates/submitted.html", 'w') as output_file:
+			#Write to submitted.html
+			output_file.write(replacement)
+
+	return render_template('submitted.html') 
 
 @app.route('/success')
 def sucess_page():
