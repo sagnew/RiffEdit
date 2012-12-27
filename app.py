@@ -17,21 +17,23 @@ def main_page():
 
 @app.route('/submit', methods=['POST', 'GET'])
 def perform_script():
+
+	#Initialize variables
 	output = ""
 	option = request.form["options"]
 	root = request.form["root"]
 	scale = request.form["scale"]
-	song = request.form["guitar_tab"]
-	jumps = [2,2,1,2,2,2,1] #just in case I messed up
-	if scale == "major":
-		jumps = [2,2,1,2,2,2,1]
-	elif scale == "minor":
-		jumps = [2,1,2,2,1,2,2]
+	song = """%s""" % request.form["guitar_tab"]
 
+	#Initializes the scale chosen by the user
+	jumps = get_scale_steps(scale)
+	roots = get_root_note_positions(root)
+
+	#Executes the method chosen by the user
 	if option == 'ck':
-		output = go_through_file(song, get_scale([0,7,2,9,5,0],jumps), option)
+		output = go_through_file(song, get_scale(roots, jumps), option)
 	if option == 'ckr':
-		output = go_through_file(song, get_scale([0,7,2,9,5,0],jumps), 'ck', 5)
+		output = go_through_file(song, get_scale(roots, jumps), 'ck', 5)
 
 	with open("templates/main_page.html") as main_page:
 
@@ -53,15 +55,7 @@ def perform_script():
 
 	return render_template('submitted.html') 
 
-@app.route('/success')
-def sucess_page():
-	return render_template('success.html')
-
-@app.route('/naughty')
-def naughty_page():
-	return render_template('naughty.html')
-
 if __name__ == '__main__':
 	port = int(os.environ.get("PORT",5000))
-	app.run(host='0.0.0.0', port=port)
+	app.run(host='0.0.0.0', port=port, debug=True)
 

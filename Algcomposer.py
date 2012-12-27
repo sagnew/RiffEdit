@@ -49,6 +49,60 @@ def get_scale(roots, steps):
 	
 	return scale
 
+def get_scale_steps(name_of_scale):
+	"""
+	Returns a list of the steps in the given scale
+	
+	To be used to interpret user input.
+	"""
+	
+	scales = {"minor": [2,1,2,2,1,2,2],
+			  "major": [2,2,1,2,2,2,1],
+			  "harmonic": [2,1,2,2,1,3,1],
+			  "dorian": [2,1,2,2,2,1,2],
+			  "mixolydian": [2,2,1,2,2,1,2],
+			  "pentatonic": [3,2,2,3,2]
+			}
+
+	return scales[name_of_scale]
+
+def get_root_note_positions(root):
+	"""
+	Returns a list of the root note position on each string for every note
+	"""
+	
+	first_positions = {"e": 0,
+					   "f": 1,
+					   "gf": 2,
+					   "g": 3,
+					   "af": 4,
+					   "a": 5,
+					   "bf": 6,
+					   "b": 7,
+					   "c": 8,
+					   "df": 9,
+					   "d": 10,
+					   "ef": 11
+					}
+	first = first_positions[root]
+	root_positions = [first, first + 7, first + 2, first + 9, first + 5, first]
+
+	return root_positions
+
+def strip_empty_lines(str):
+	"""
+	Takes an empty string and removes lines that contain only whitespace
+	"""
+
+	final_str = ""
+	for line in str.split('\n'):
+		if not line.isspace() and len(line) > 0:
+			final_str += line + '\n'
+	
+	return """%s """ % final_str
+
+
+
 def print_scale(scale):
 	"""
 	Prints a representation of the neck of the guitar for this specific scale
@@ -105,11 +159,14 @@ def go_through_file(song, scale, method, accidental=-1):
 	"""
 
 	modified_song = ""
-	string = 6
+	string = 5
 	previous_note = '-'
+	song = strip_empty_lines(song)
+
 	for note in song:
 		if string < 0:
-			string = 6
+			modified_song += '\n'
+			string = 5
 
 		if note.isdigit():
 			if previous_note.isdigit():
@@ -144,3 +201,11 @@ def go_through_file(song, scale, method, accidental=-1):
 			modified_song += str(change_key(int(previous_note), scale, string, accidental))
 
 	return modified_song
+
+go_through_file("""E|-----------------------------------------------------|
+B|--11---------11--------------11--------11------------|
+G|------10-10------13-11-12--------10-10----14-12-14---|
+D|-----------------------------------------------------|
+A|-----------------------------------------------------|
+E|-----------------------------------------------------|
+""", get_scale([2,2,1,2,2,2,1], [0,7,2,9,5,0]), 'ck')
