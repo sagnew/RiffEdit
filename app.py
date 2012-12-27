@@ -2,12 +2,8 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect
-from flask.ext.wtf import Form, TextAreaField
 from Algcomposer import *
 import os
-
-class OutputForm(Form):
-	output = TextAreaField('This is output')
 
 app = Flask(__name__)
 
