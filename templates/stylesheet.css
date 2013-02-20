@@ -1,0 +1,23 @@
+.panel {
+    padding: 50px;
+    height: 100px;
+    width: 500px;
+    text-align: center;
+    font-size: 24px;
+    font-family: Arial;
+    font-weight: bold;
+    background: #EEE;
+    cursor: pointer;
+    -webkit-border-bottom-left-radius: 10px;
+}
+
+#tab {
+    bottom: -25px;
+    right: 0px;
+    padding: 10px;
+    background: #EEE;
+    font-size: 16px;
+    text-decoration: none;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+}
