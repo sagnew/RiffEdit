@@ -5,7 +5,7 @@ import random
 Takes a text guitar tab input, and changes the music to a different key with a different melody.
 This is my attempt at writing a script to perform algorithmic musical composition.
 
-Current idea: 
+Current idea:
 Represent each scale as a 2D array corresponding to string and fret number(0 being the low E and 5 being the high e)
 
 Input: A guitar tab text file(preferably one compatible with Guitar Pro's format)
@@ -15,7 +15,7 @@ Output: Another guitar tab text file that is modified to be a different composit
 def get_scale(roots, steps):
 	"""
 	Returns a 2D list of each note on each string that is in a specific key.
-	
+
 	Arguments:
 	roots: A list of root notes of the scale corresponding to where this note is on each string
 	steps: The order in which the scale steps(whole steps and half steps)
@@ -37,7 +37,7 @@ def get_scale(roots, steps):
 					break
 				string.append(num)
 
-	#This loop does the same thing, but from the root note down to the open string(fret 0)	
+	#This loop does the same thing, but from the root note down to the open string(fret 0)
 	for string in scale:
 		num = string[0]
 		while num >= 0:
@@ -46,16 +46,16 @@ def get_scale(roots, steps):
 				if num < 0:
 					break
 				string.insert(0, num)
-	
+
 	return scale
 
 def get_scale_steps(name_of_scale):
 	"""
 	Returns a list of the steps in the given scale
-	
+
 	To be used to interpret user input.
 	"""
-	
+
 	scales = {"minor": [2,1,2,2,1,2,2],
 			  "major": [2,2,1,2,2,2,1],
 			  "harmonic": [2,1,2,2,1,3,1],
@@ -70,7 +70,7 @@ def get_root_note_positions(root):
 	"""
 	Returns a list of the root note position on each string for every note
 	"""
-	
+
 	first_positions = {"e": 0,
 					   "f": 1,
 					   "gf": 2,
@@ -98,7 +98,7 @@ def strip_empty_lines(str):
 	for line in str.split('\n'):
 		if not line.isspace() and len(line) > 0:
 			final_str += line + '\n'
-	
+
 	return """%s """ % final_str
 
 
@@ -107,19 +107,19 @@ def print_scale(scale):
 	"""
 	Prints a representation of the neck of the guitar for this specific scale
 	"""
-	
+
 	for i in scale:
 		print i
 
 def change_key(note, scale, string, accidental=-1):
 	"""
 	This takes an input sequence of notes(guitar tablature) and changes it to a different key
-	
+
 	The simplest algorithm I will implement for composing music.
 	Finds each note in the sequence and changes it to the closest note in the scale
 	This keeps the melody very similar, but changes what key it is in.
 	The melody may not be exactly the same because notes relative to each other will
-	not always be preserved the same way. 
+	not always be preserved the same way.
 	"""
 
 	random_offset = 0
@@ -127,7 +127,7 @@ def change_key(note, scale, string, accidental=-1):
 	min_fret = 24
 	for fret in scale[string]:
 		if abs(fret - note) < min:
-			min = abs(fret - note) 
+			min = abs(fret - note)
 			min_fret = fret
 
 	if accidental > 0:
@@ -155,7 +155,7 @@ def go_through_file(song, scale, method, accidental=-1):
 	This will give a 1/accidental chance of a randomly placed accidental note being returned.
 
 	Methods so far: 'ck' = changes what key the song is in
-	
+
 	"""
 
 	modified_song = ""
@@ -195,17 +195,9 @@ def go_through_file(song, scale, method, accidental=-1):
 			previous_note = '-'
 			modified_song += '\n'
 			string -= 1
-	
+
 	if previous_note.isdigit():
 		if method == 'ck':
 			modified_song += str(change_key(int(previous_note), scale, string, accidental))
 
 	return modified_song
-
-go_through_file("""E|-----------------------------------------------------|
-B|--11---------11--------------11--------11------------|
-G|------10-10------13-11-12--------10-10----14-12-14---|
-D|-----------------------------------------------------|
-A|-----------------------------------------------------|
-E|-----------------------------------------------------|
-""", get_scale([2,2,1,2,2,2,1], [0,7,2,9,5,0]), 'ck')
