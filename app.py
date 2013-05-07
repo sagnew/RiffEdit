@@ -31,7 +31,7 @@ def perform_script():
     if option == 'ckr':
         output = go_through_file(song, get_scale(roots, jumps), 'ck', 5)
 
-    with open("templates/main_page.html") as main_page:
+    with open("templates/index.html") as main_page:
 
         #Setting up variables for replacing
         scale_text = "<option value=" + '"' + scale + '"'
