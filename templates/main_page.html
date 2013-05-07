@@ -14,74 +14,71 @@
     <body style="background-image:url(static/images/sheet-music.png);">
         <div class="container">
 
-            <div class="span12">
-                <div>
-                    <h1>Riff Editor</h1>
+            <div>
+                <h1>Riff Editor</h1>
+                <p>Select which method you wish to use.</p>
+            </div>
 
-                    <p>Select which method you wish to use.</p>
-                </div>
-                <form class="form-vertical" name="in_form_ation" method="POST" action="/submit">
-                    <div class="controls">
+            <form class="form-vertical" name="in_form_ation" method="POST" action="/submit">
+                <div class="controls">
 
-                        <select name="options" ID="options">
-                            <option value="ck">Change key</option>
-                            <option value="ckr">Add elements of randomness</option>
-                        </select>
-                        <select name="root" ID="root">
-                            <option value="af">A flat/G sharp</option>
-                            <option value="a">A</option>
-                            <option value="bf">B flat/A sharp</option>
-                            <option value="b">B</option>
-                            <option value="c">C</option>
-                            <option value="df">D flat/C sharp</option>
-                            <option value="d">D</option>
-                            <option value="ef">E flat/D sharp</option>
-                            <option value="e">E</option>
-                            <option value="f">F</option>
-                            <option value="gf">G flat/F sharp</option>
-                            <option value="g">G</option>
-                        </select>
-                        <select name="scale" ID="scale">
-                            <option value="major">Major</option>
-                            <option value="minor">Minor</option>
-                            <option value="harmonic">Harmonic Minor</option>
-                            <option value="pentatonic">Pentatonic</option>
-                            <option value="dorian">Dorian</option>
-                            <option value="mixolydian">Mixolydian</option>
-                        </select>
-                        <br>
-                        <div class="row">
-                            <div class="span6">
-                                <h2>Input</h2>
+                    <select name="options" ID="options">
+                        <option value="ck">Change key</option>
+                        <option value="ckr">Add elements of randomness</option>
+                    </select>
+                    <select name="root" ID="root">
+                        <option value="af">A flat/G sharp</option>
+                        <option value="a">A</option>
+                        <option value="bf">B flat/A sharp</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                        <option value="df">D flat/C sharp</option>
+                        <option value="d">D</option>
+                        <option value="ef">E flat/D sharp</option>
+                        <option value="e">E</option>
+                        <option value="f">F</option>
+                        <option value="gf">G flat/F sharp</option>
+                        <option value="g">G</option>
+                    </select>
+                    <select name="scale" ID="scale">
+                        <option value="major">Major</option>
+                        <option value="minor">Minor</option>
+                        <option value="harmonic">Harmonic Minor</option>
+                        <option value="pentatonic">Pentatonic</option>
+                        <option value="dorian">Dorian</option>
+                        <option value="mixolydian">Mixolydian</option>
+                    </select>
+                    <br>
+                    <div class="row">
+                        <div class="span6">
+                            <h2>Input</h2>
 
-                                <textarea name="guitar_tab" id="guitar_tab" class="span6" rows="25"
-                                    onfocus="if (this.value==this.defaultValue) this.value = ''"
-                                    onblur="if (this.value=='') this.value = this.defaultValue">Enter text-based guitar tablature.</textarea>
+                            <textarea name="guitar_tab" id="guitar_tab" class="span6" rows="25"
+                                onfocus="if (this.value==this.defaultValue) this.value = ''"
+                                onblur="if (this.value=='') this.value = this.defaultValue">Enter text-based guitar tablature.</textarea>
 
-                                <button class="btn btn-large btn-block btn-inverse" type="submit">Execute operation! &raquo;</a>
+                            <button class="btn btn-large btn-block btn-inverse" type="submit">Execute operation! &raquo;</a>
 
+                        </div>
+
+                        <div class="span6">
+
+                            <div class="panel">
+                                <a id='tab' style="text-decoration:none; color: #000;"><h2>Output</h2></a>
                             </div>
 
-                            <div class="span6">
-
-                                <div class="panel">
-                                    <a id='tab' style="text-decoration:none; color: #000;"><h2>Output</h2></a>
-                                </div>
-
-                                <div id="output_tab">
-                                    <textarea name="output_box" id="output_box" class="span6" rows="25"
-                                        >View output here</textarea>
-                                </div>
-
+                            <div id="output_tab">
+                                <textarea name="output_box" id="output_box" class="span6" rows="25"
+                                    >View output here</textarea>
                             </div>
 
-                        </div><!-- .row -->
+                        </div>
 
-                    </div> <!-- .controls-->
+                    </div><!-- .row -->
 
-                </form>
+                </div> <!-- .controls-->
 
-            </div><!-- .hero-unit -->
+            </form>
 
         </div><!-- .container -->
     </body>
