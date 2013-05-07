@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_page():
-    return render_template('main_page.html')
+    return render_template('index.html')
 
 @app.route('/submit', methods=['POST', 'GET'])
 def perform_script():
