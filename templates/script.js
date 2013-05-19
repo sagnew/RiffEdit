@@ -3,6 +3,4 @@ $(document).ready(function(){
    $('.panel').click(function(){
         $('#output_tab').slideDown('slow');
    });
-
-    //$('.panel').accordion({collapsible: true, active: false});
 });
